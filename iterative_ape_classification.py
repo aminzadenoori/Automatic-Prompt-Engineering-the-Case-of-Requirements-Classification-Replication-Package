@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Log in to Hugging Face Hub
-login(token="")
+login(token="your_huggingface_token_here")
 
 # Load the model
 model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
@@ -270,7 +270,6 @@ def extract_steps(text, examples):
     
 # Function to generate an optimized classification prompt
 def generate_optimized_classification_prompt(examples, labels, class_explanations, is_quality=False):
-    
     formatted_examples = "\n".join([f'"{text}" --> {label}' for text, label in zip(examples, labels)])
     explanations = "\n".join([f"- {label}: {explanation}" for label, explanation in class_explanations.items()])
     category = "Quality" if is_quality else "Functional"
@@ -304,46 +303,40 @@ Based on these examples and explanations classify unseen software requirements i
             final_prompt = sample_prompt
         else:
             final_prompt = extract_steps(qaulity_optmised_prompt, formatted_examples)
-    
-
     else:
         if functional_optmised_prompt == "":
             final_prompt = sample_prompt
         else:
             final_prompt = extract_steps(functional_optmised_prompt, formatted_examples)
-    
 
     # Optimization prompt with instructions to create a generalized prompt without examples
     
     optimization_prompt = f'''
-    You are required to enhance and clarify the explanations of the categories in the prompt by integrating illustrative examples and information implicitly referenced in the initial context. The optimized prompt must follow these strict guidelines:
-    
-    Maintain the Original Steps: The steps in the optimized prompt must remain exactly the same as in the sample prompt; no changes should be made to the steps' structure or order. Do not add any new steps or content beyond the existing steps.
-    Expand Explanations: Enrich and expand the explanations of each category within the steps, incorporating any new examples provided at the end of the sample prompt. Use these examples to enhance understanding and provide clarity, but ensure all content remains within the existing steps and does not extend beyond them.
-    Incorporate Class Explanations: Specifically, integrate the detailed "Class Explanations" of categories from the first prompt into the optimized prompt. For each category, introduce implicit clarifications based on relevant data extracted from the context, keeping all additions within the boundaries of the original steps.
-    Use New Examples: If there are new examples at the end of the prompt, use them to further expand and illustrate the explanations within the existing steps. Do not include any content beyond step 5.
-    End Strictly After Step 5: The optimized prompt must strictly end after step 5. Do not add any additional steps, conclusions, or content beyond this point.
-    Focus Only on Explanations: Remember, only the explanations within the steps should be expanded; the steps themselves should remain unchanged in structure and order. Any new examples should be used to enhance the explanations within the steps, not to add new content or extend the prompt beyond its original end. 
-    Given the above strict instructions, extend the prompt below using the outlined techniques. Ensure that the new optimized prompt ends strictly after step 5, with no additional content beyond that point:
-    """
-    {final_prompt}
-    """
-    '''
-    
-    print(optimization_prompt)
+You are required to enhance and clarify the explanations of the categories in the prompt by integrating illustrative examples and information implicitly referenced in the initial context. The optimized prompt must follow these strict guidelines:
 
+Maintain the Original Steps: The steps in the optimized prompt must remain exactly the same as in the sample prompt; no changes should be made to the steps' structure or order. Do not add any new steps or content beyond the existing steps.
+Expand Explanations: Enrich and expand the explanations of each category within the steps, incorporating any new examples provided at the end of the sample prompt. Use these examples to enhance understanding and provide clarity, but ensure all content remains within the existing steps and does not extend beyond them.
+Incorporate Class Explanations: Specifically, integrate the detailed "Class Explanations" of categories from the first prompt into the optimized prompt. For each category, introduce implicit clarifications based on relevant data extracted from the context, keeping all additions within the boundaries of the original steps.
+Use New Examples: If there are new examples at the end of the prompt, use them to further expand and illustrate the explanations within the existing steps. Do not include any content beyond step 5.
+End Strictly After Step 5: The optimized prompt must strictly end after step 5. Do not add any additional steps, conclusions, or content beyond this point.
+Focus Only on Explanations: Remember, only the explanations within the steps should be expanded; the steps themselves should remain unchanged in structure and order. Any new examples should be used to enhance the explanations within the steps, not to add new content or extend the prompt beyond its original end. 
+Given the above strict instructions, extend the prompt below using the outlined techniques. Ensure that the new optimized prompt ends strictly after step 5, with no additional content beyond that point:
+"""
+{final_prompt}
+"""
+'''
 
     systemprompt = "Imagine yourself as an expert in the realm of prompting techniques for LLMs. Your expertise is not just broad, encompassing the entire spectrum of current knowledge on the subject, but also deep, delving into the nuances and intricacies that many overlook. Your job is to reformulate prompts with surgical precision, optimizing them for the most accurate response possible. The reformulated prompt should enable the LLM to always give the correct answer to the question."
 
     # Generate the optimized prompt
-    optimized_prompt, _ = generate_response(optimization_prompt,systemprompt)
+    optimized_prompt, _ = generate_response(optimization_prompt, systemprompt)
     
-    if  is_quality:
+    if is_quality:
         qaulity_optmised_prompt = optimized_prompt
     else:
         functional_optmised_prompt = optimized_prompt
-    optimized_prompt=extract_steps(optimized_prompt,formatted_examples)
-    print(optimized_prompt)
+    
+    optimized_prompt = extract_steps(optimized_prompt, formatted_examples)
     return optimized_prompt.strip()
 
 # Function to generate response using the model
@@ -373,6 +366,30 @@ def compute_classification_metrics(y_true, y_pred):
         auc = np.nan
     metrics['AUC'] = auc
     return metrics
+
+# Function to sample up to 8 misclassified examples, balanced across labels
+def sample_misclassified_examples(misclassified_df, total_samples=8, random_state=None):
+    labels = misclassified_df['label'].unique()
+    n_labels = len(labels)
+    samples_per_label = total_samples // n_labels
+    remainder = total_samples % n_labels
+    samples_per_label_dict = {label: samples_per_label for label in labels}
+    # Distribute the remainder
+    for i, label in enumerate(labels):
+        if i < remainder:
+            samples_per_label_dict[label] += 1
+    sampled_dfs = []
+    for label in labels:
+        df_label = misclassified_df[misclassified_df['label'] == label]
+        n_samples = min(samples_per_label_dict[label], len(df_label))
+        if n_samples > 0:
+            sampled_df_label = df_label.sample(n_samples, random_state=random_state)
+            sampled_dfs.append(sampled_df_label)
+    if sampled_dfs:
+        sampled_examples = pd.concat(sampled_dfs).reset_index(drop=True)
+    else:
+        sampled_examples = pd.DataFrame(columns=misclassified_df.columns)
+    return sampled_examples
 
 # Main function to run the process
 def run_classification(df_uploaded, pipeline, num_runs=1):
@@ -479,8 +496,8 @@ def run_classification(df_uploaded, pipeline, num_runs=1):
                 # Identify misclassified samples
                 misclassified_f = df_functional_val[df_functional_val['label'] != df_functional_val['Predicted_Label']]
             
-                # Select misclassified samples to use as new examples
-                misclassified_examples_f = misclassified_f.groupby('label').apply(lambda x: x.sample(min(4, len(x)), random_state=iteration)).reset_index(drop=True)
+                # Select up to 8 misclassified samples to use as new examples
+                misclassified_examples_f = sample_misclassified_examples(misclassified_f, total_samples=8, random_state=iteration)
                 class_examples_functional = misclassified_examples_f.set_index('text')['label'].to_dict()
                 train_texts_f = list(class_examples_functional.keys())
                 train_labels_f = list(class_examples_functional.values())
@@ -501,8 +518,8 @@ def run_classification(df_uploaded, pipeline, num_runs=1):
                 # Identify misclassified samples
                 misclassified_q = df_quality_val[df_quality_val['label'] != df_quality_val['Predicted_Label']]
 
-                # Select misclassified samples to use as new examples
-                misclassified_examples_q = misclassified_q.groupby('label').apply(lambda x: x.sample(min(4, len(x)), random_state=iteration)).reset_index(drop=True)
+                # Select up to 8 misclassified samples to use as new examples
+                misclassified_examples_q = sample_misclassified_examples(misclassified_q, total_samples=8, random_state=iteration)
                 class_examples_quality = misclassified_examples_q.set_index('text')['label'].to_dict()
                 train_texts_q = list(class_examples_quality.keys())
                 train_labels_q = list(class_examples_quality.values())
