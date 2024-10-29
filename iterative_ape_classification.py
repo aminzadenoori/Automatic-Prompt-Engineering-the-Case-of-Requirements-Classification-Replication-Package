@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Log in to Hugging Face Hub
-login(token="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")
+login(token="")
 
 # Load the model
 model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
