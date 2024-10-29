@@ -168,6 +168,33 @@ This code is associated with the paper:
 If you use this code in your research or wish to refer to the methodology, please cite the paper accordingly.
 
 ---
+### Output Data (`output.csv`)
+
+This file, `Output.csv`, contains the results of the classification task. It provides key classification metrics (Precision, Recall, F1, and F2 scores) for different  task categories. 
+
+#### Columns:
+Each column represents one of the primary metrics in classification performance:
+- **P**: Precision - the proportion of true positives among predicted positives.
+- **R**: Recall - the proportion of true positives among actual positives.
+- **F1**: F1 Score - the harmonic mean of Precision and Recall, balancing the two.
+- **F2**: F2 Score - a variant of the F-measure, which places more emphasis on Recall.
+
+The columns are organized by category:
+- **F**: Functional classification metrics
+- **Q**: Quality classification metrics
+- **onlyF**: Only functional classification 
+- **onlyQ**: Only quality classification
+
+#### Rows:
+The rows represent the different classification methods used:
+- **Zero-shot**: No task-specific training data was used.
+- **Few-shot**: Limited examples were provided for training.
+- **CoT**: Chain of Thought approach for task-solving steps.
+- **CoT U Few-shot**: Combination of Chain of Thought and Few-shot methods.
+- **APE-fixed (10, 20, 30)**:Fixed Automatic Prompt Engineering technique with traning set adjustment.
+- **APE (10, 20, 30)**: Automatic Prompt Engineering versions with traning set adjustment.
+
+This structure allows quick comparisons across classification strategies and categories, enabling insights into how each approach performs across both Functional and Quality-based tasks.
 
 
 ## Contact
