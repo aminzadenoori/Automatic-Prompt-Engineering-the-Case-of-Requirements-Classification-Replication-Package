@@ -191,10 +191,5 @@ For any questions or issues, please contact:
 - **Liping Zhao**: [liping.zhao@manchester.ac.uk](mailto:liping.zhao@manchester.ac.uk)
 - **Waad Alhoshan**: [wmaboud@imamu.edu.sa](mailto:wmaboud@imamu.edu.sa)
 
----
-
-## License
-
-Please specify the license under which the code is released (e.g., MIT License). If not specified, users will assume the default GitHub licensing rules.
 
 
