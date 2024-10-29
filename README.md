@@ -41,7 +41,7 @@ The code evaluates multiple prompting methods:
   - `torch`
   - `huggingface_hub`
 - **Dataset**:
-  - A CSV file named `https://github.com/explainable-re/RE-2019-Materials/blob/master/Manually%20tagged%20datasets/promise-reclass.csv` containing the software requirements data.
+  - A CSV file named [Promise-Reclass.csv](`https://github.com/explainable-re/RE-2019-Materials/blob/master/Manually%20tagged%20datasets/promise-reclass.csv`) containing the software requirements data.
 - **Hugging Face Access Token**:
   - A Hugging Face access token is required to use the LLM from the Hugging Face Hub.
 
