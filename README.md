@@ -137,7 +137,7 @@ The algorithm performs an iterative process to optimize prompts:
 5. **Iteration**: The process repeats, integrating misclassified samples into the prompt.
 6. **Stopping Condition**: Iterations continue until either:
    - The maximum number of iterations (`20`) is reached, or
-   - The increase in F1-score is less than `0.02` between iterations.
+   - The difference in F1-score is less than `0.02` compared to the best baseline.
 
 ### Prompting Methods
 
