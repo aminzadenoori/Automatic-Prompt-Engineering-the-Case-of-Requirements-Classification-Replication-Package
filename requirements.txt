@@ -1,6 +1,6 @@
-transformers
-pandas
-scikit-learn
+transformers==4.44.2
+pandas==2.2.2
+scikit-learn==1.5.1
 numpy
-torch
-huggingface_hub
+torch==2.4.0
+huggingface-hub==0.24.6
