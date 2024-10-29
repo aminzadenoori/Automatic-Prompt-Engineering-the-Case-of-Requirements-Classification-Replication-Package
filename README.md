@@ -169,18 +169,6 @@ If you use this code in your research or wish to refer to the methodology, pleas
 
 ---
 
-## Citation
-
-```bibtex
-@inproceedings{zadenoori2023automatic,
-  title={Automatic Prompt Engineering: the Case of Requirements Classification},
-  author={Zadenoori, Mohammad Amin and Zhao, Liping and Alhoshan, Waad and Ferrari, Alessio},
-  booktitle={Proceedings of the XYZ Conference},
-  year={2023}
-}
-```
-
----
 
 ## Contact
 
