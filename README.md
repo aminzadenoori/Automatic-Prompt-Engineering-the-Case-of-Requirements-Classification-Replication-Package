@@ -197,8 +197,4 @@ For any questions or issues, please contact:
 
 Please specify the license under which the code is released (e.g., MIT License). If not specified, users will assume the default GitHub licensing rules.
 
----
 
-**Note**: Ensure that you comply with all relevant licenses and terms of service, especially when using third-party APIs and services like Hugging Face models.
-
----
