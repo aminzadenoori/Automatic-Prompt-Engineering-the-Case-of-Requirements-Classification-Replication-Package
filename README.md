@@ -26,7 +26,7 @@ The code evaluates multiple prompting methods:
 - **Chain-of-Thought (CoT) Prompting**
 - **Few-Shot Prompting**
 - **CoT with Examples**
-- **Automated Prompt Evolution (APE)**
+- **Automatic Prompt Engineering (APE)**
 
 ---
 
