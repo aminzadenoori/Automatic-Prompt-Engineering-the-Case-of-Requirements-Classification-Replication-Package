@@ -119,8 +119,6 @@ The script will perform the classification process, iteratively refining the pro
 The script will produce CSV files containing the classification results and metrics:
 
 - `best_classification_metrics_run1_best_f1.csv`: Contains the best classification metrics for the run.
-- `best_binary_classification_results_functionality_run1.csv`: Contains detailed classification results for functionality classification.
-- `best_binary_classification_results_quality_run1.csv`: Contains detailed classification results for quality classification.
 
 ---
 
