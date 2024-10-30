@@ -163,6 +163,54 @@ This code is associated with the paper:
 
 **Automatic Prompt Engineering: the Case of Requirements Classification**
 
+To run the code in this repository, follow these steps:
+
+1. **Prerequisites**
+   - Ensure you have Python installed on your system.
+   - Install the required libraries with:
+     ```bash
+     pip install pandas sklearn transformers torch huggingface_hub
+     ```
+
+2. **Hugging Face Hub Authentication**
+   - Obtain your Hugging Face Hub token and replace `"your_huggingface_token_here"` in the code.
+   - This is required to load the model from Hugging Face.
+
+3. **Run the Script**
+
+   - **Step-by-Step Breakdown:**
+     1. **Data Preparation**:
+         - The script reads in `promise-reclass.csv` to create binary labels for functionality (`Functional` and `Non-Functional`) and quality (`Quality` and `Non-Quality`).
+         - Initial samples are selected for both functionality and quality categories.
+         - The remaining data is split into test and validation sets.
+
+     2. **Model and Pipeline Setup**:
+         - The Hugging Face `transformers` pipeline loads the `Meta-Llama-3-8B-Instruct` model, which is then used for generating text prompts.
+         - Tokenization settings are configured for batching.
+
+     3. **Prompt Generation and Classification**:
+         - The code defines multiple prompt types (zero-shot, few-shot, chain-of-thought) to classify text based on requirements.
+         - For functionality and quality classifications, optimized prompts are generated to improve classification accuracy.
+
+     4. **Iterative Optimization and Evaluation**:
+         - An iterative process optimizes prompts by incorporating examples from misclassified data, evaluating each iteration to find the best prompt.
+         - Metrics such as F1-score, precision, recall, and AUC are calculated for each classification task.
+         - The script stops further iterations if improvements in F1-score fall below a threshold.
+
+     5. **Saving Results**:
+         - The script saves the best-performing models and metrics as CSV files for each classification task.
+
+4. **Running the Main Function**
+   - Run the main function to initiate classification and save the results:
+     ```python
+     run_classification(df_uploaded, pipeline, num_runs=1)
+     ```
+
+5. **Output**
+   - Results are saved in CSV format within the working directory, showing metrics and misclassified samples for further analysis.
+
+This process automates the classification of functionality and quality requirements while iteratively optimizing prompts to enhance performance.
+
 If you use this code in your research or wish to refer to the methodology, please cite the paper accordingly.
 
 ---
