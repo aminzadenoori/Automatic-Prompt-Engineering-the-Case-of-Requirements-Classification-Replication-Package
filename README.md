@@ -1,4 +1,4 @@
-# Automated Prompt Engineering: the Case of Requirements Classification (Replication Package)
+# Automatic Prompt Engineering: the Case of Requirements Classification (Replication Package)
 
 This repository contains the implementation of the Automatic Prompt Engineering (APE) algorithm as described in the paper:
 
