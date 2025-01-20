@@ -654,7 +654,7 @@ def run_classification(df_uploaded, pipeline, num_runs=1):
                 previous_f1_scores[classification] = current_f1_score
 
                 # Check if increase is less than threshold
-                if increase_in_f1 < f1_score_threshold:
+                if increase_in_f1 > f1_score_threshold:
                     stop_iteration = True
 
             if stop_iteration:
