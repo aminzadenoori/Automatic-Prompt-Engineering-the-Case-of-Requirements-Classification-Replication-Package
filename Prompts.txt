@@ -1,0 +1,130 @@
+========================================
+SYSTEM PROMPTS
+========================================
+
+(Note: **The system prompt is always provided to the LLM first, so it understands the classification task and the required output format.**)
+
+-- System Prompt (Functional vs. Non-Functional) --
+
+As an expert system for classifying software requirements, your task is to carefully analyze each given requirement and categorize it into one of the following two categories:
+
+"1": Functional
+"2": Non-Functional
+
+Output only the number (1 or 2) that corresponds to the appropriate category. Do not provide any additional explanations.
+
+Please provide the categorized number for the given software requirement, with no additional text.
+
+--------------------------------------------------
+
+-- System Prompt (Quality vs. Non-Quality) --
+
+As an expert system for classifying software requirements, your task is to carefully analyze each given requirement and categorize it into one of the following two categories:
+
+"1": Quality
+"2": Non-Quality
+
+Output only the number (1 or 2) that corresponds to the appropriate category. Do not provide any additional explanations.
+
+Please provide the categorized number for the given software requirement, with no additional text.
+
+
+========================================
+USER PROMPTS
+========================================
+
+-- Zero-Shot Prompt --
+
+Requirement: {text}
+
+--------------------------------------------------
+
+-- Few-Shot Prompt --
+
+Below are examples of different types of requirements and their classifications:
+
+{examples}
+
+Requirement: {text}
+
+--------------------------------------------------
+
+-- Chain-of-Thought (CoT) Prompt (Explanations Only) --
+
+Let's analyze the classification of the requirement step by step.
+
+Step 1: Read the explanations of different types of requirements:
+{explanations}
+
+Step 2: Understand how to classify requirements using these explanations as guidance.
+
+Step 3: Apply this understanding to the following requirement:
+
+Requirement: {text}
+
+Step 4: Determine the classification of the requirement and provide the final label of the class without any explanations.
+
+--------------------------------------------------
+
+-- Chain-of-Thought (CoT) Prompt (Examples + Explanations) --
+
+Let's analyze the classification of requirements step by step.
+
+Step 1: Review the examples of different types of requirements and their classifications:
+{examples}
+
+Step 2: Read the explanations for these classifications:
+{explanations}
+
+Step 3: Understand how to classify requirements using the examples and explanations as guidance.
+
+Step 4: Apply this understanding to the following requirement:
+
+Requirement: {text}
+
+Step 5: Determine the classification of the requirement and provide the final label of the class without any explanations.
+
+
+
+========================================
+AUTOMATIC PROMPT ENGINEERING
+========================================
+
+-- Initial (Sample) Prompt --
+
+You are an expert system that needs to classify software requirements into two categories: {category} and {opposite_category}.
+
+Let's analyze the classification of requirements step by step.
+
+Step 1: Review the examples of different types of requirements and their classifications:
+
+{formatted_examples}
+
+Step 2: Read the explanations for these classifications:
+
+{explanations}
+
+Step 3: Understand how to classify requirements using the examples and explanations as guidance.
+
+Step 4: Apply this understanding to the following requirement.
+
+Step 5: Determine the classification of the requirement and provide the final label of the class without any explanations.
+Based on these examples and explanations classify unseen software requirements into {category} or {opposite_category}. Just give the final label without any explanations. The output categories should be exactly the same as the categories mentioned here.
+
+--------------------------------------------------
+
+-- Optimization Prompt --
+
+You are required to enhance and clarify the explanations of the categories in the prompt by integrating illustrative examples and information implicitly referenced in the initial context. The optimized prompt must follow these strict guidelines:
+
+Maintain the Original Steps: The steps in the optimized prompt must remain exactly the same as in the sample prompt; no changes should be made to the steps' structure or order. Do not add any new steps or content beyond the existing steps.
+Expand Explanations: Enrich and expand the explanations of each category within the steps, incorporating any new examples provided at the end of the sample prompt. Use these examples to enhance understanding and provide clarity, but ensure all content remains within the existing steps and does not extend beyond them.
+Incorporate Class Explanations: Specifically, integrate the detailed "Class Explanations" of categories from the first prompt into the optimized prompt. For each category, introduce implicit clarifications based on relevant data extracted from the context, keeping all additions within the boundaries of the original steps.
+Use New Examples: If there are new examples at the end of the prompt, use them to further expand and illustrate the explanations within the existing steps. Do not include any content beyond step 5.
+End Strictly After Step 5: The optimized prompt must strictly end after step 5. Do not add any additional steps, conclusions, or content beyond this point.
+Focus Only on Explanations: Remember, only the explanations within the steps should be expanded; the steps themselves should remain unchanged in structure and order. Any new examples should be used to enhance the explanations within the steps, not to add new content or extend the prompt beyond its original end.
+
+Given the above strict instructions, extend the prompt below using the outlined techniques. Ensure that the new optimized prompt ends strictly after step 5, with no additional content beyond that point:
+"""
+{final_prompt}
+"""
