@@ -625,41 +625,50 @@ def run_classification(df_uploaded, pipeline, num_runs=1):
             # Convert metrics list to DataFrame
             metrics_df = pd.DataFrame(metrics_list)
 
-            # Check and update best f1-scores for each classification task for all methods
+           # Check and update best f1-scores for each classification task for all methods
             for method in methods:
                 for classification in ['Functional', 'Quality', 'Functional_NonQuality_vs_All', 'Quality_NonFunctional_vs_All']:
-                    method_metrics = metrics_df[(metrics_df['Method'] == method) & (metrics_df['Classification'] == classification)]
+                    method_metrics = metrics_df[
+                        (metrics_df['Method'] == method) & 
+                        (metrics_df['Classification'] == classification)
+                    ]
+                    
                     current_f1_score = method_metrics['f1-score'].values[0]
+                    
+                    # Compare current F1 score to the best F1 score so far
                     if current_f1_score > best_f1_scores[classification]:
                         best_f1_scores[classification] = current_f1_score
                         best_metrics[classification] = method_metrics.copy()
                         best_iteration[classification] = iteration + 1  # iterations are 0-indexed
+                        
+                        # Update the best test sets if needed
                         if classification in ['Functional', 'Functional_NonQuality_vs_All']:
                             best_df_functional_test = df_functional_test.copy()
                         if classification in ['Quality', 'Quality_NonFunctional_vs_All']:
                             best_df_quality_test = df_quality_test.copy()
-
-            # Add stopping condition based on F1-score increase for APE method
-            # Initialize a flag to check whether to stop iterating
+            
+            # Add stopping condition based on improvement over the BEST F1-score for the APE method
             stop_iteration = False
-
-            # For each classification task, check the increase in F1-score for the APE method
+            
             for classification in ['Functional', 'Quality', 'Functional_NonQuality_vs_All', 'Quality_NonFunctional_vs_All']:
-                ape_metrics = metrics_df[(metrics_df['Method'] == 'APE') & (metrics_df['Classification'] == classification)]
+                ape_metrics = metrics_df[
+                    (metrics_df['Method'] == 'APE') &
+                    (metrics_df['Classification'] == classification)
+                ]
                 current_f1_score = ape_metrics['f1-score'].values[0]
-                previous_f1_score = previous_f1_scores[classification]
-                increase_in_f1 = current_f1_score - previous_f1_score
-
-                # Update previous_f1_scores
-                previous_f1_scores[classification] = current_f1_score
-
-                # Check if increase is less than threshold
-                if increase_in_f1 > f1_score_threshold:
+                
+                # Compare against the best F1 so far (instead of previous iteration)
+                best_f1_so_far = best_f1_scores[classification]
+                improvement_over_best = current_f1_score - best_f1_so_far
+                
+                # If the improvement over the BEST so far is greater than the threshold, stop
+                if improvement_over_best > f1_score_threshold:
                     stop_iteration = True
-
+            
             if stop_iteration:
-                print("Stopping iterations as the increase in F1-score is less than the threshold.")
+                print("Stopping iterations as the increase in F1-score over the best so far exceeds the threshold.")
                 break
+
 
             # Update validation set with predictions for next iteration
             # This step is already done above when we assigned 'Predicted_Label' in df_functional_val and df_quality_val
