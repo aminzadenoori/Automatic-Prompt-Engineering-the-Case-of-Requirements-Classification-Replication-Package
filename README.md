@@ -18,7 +18,7 @@ This repository contains the implementation of the Automatic Prompt Engineering 
 
 ## Overview
 
-This repository provides the code for implementing an iterative approach to automatically engineer prompts for classifying software requirements using Large Language Models (LLMs). The algorithm leverages misclassified samples from a validation set to refine prompts and improve classification performance over multiple iterations. The prompts used in this study are located in the file `Prompt.txt`.
+This repository provides the code for implementing an iterative approach to automatically engineer prompts for classifying software requirements using Large Language Models (LLMs). The algorithm leverages misclassified samples from a validation set to refine prompts and improve classification performance over multiple iterations. The prompts used in this study are located in the file `prompt.txt`.
 
 The code evaluates multiple prompting methods:
 
