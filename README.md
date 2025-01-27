@@ -84,6 +84,7 @@ Place the `promise-reclass.csv` file in the root directory of the repository. Th
 - `RequirementText`: The text of the requirement.
 - `IsFunctional`: Binary label indicating if the requirement is functional (`1`) or not (`0`).
 - `IsQuality`: Binary label indicating if the requirement is quality-related (`1`) or not (`0`).
+  
 
 ### 4. Obtain a Hugging Face Access Token
 
@@ -156,6 +157,7 @@ The script evaluates multiple prompting methods:
 - **`iterative_ape_classification.py`**: The main script implementing the algorithm.
 - **`promise-reclass.csv`**: The dataset file (not included; you need to provide it).
 - **`requirements.txt`**: Contains the list of required Python libraries.
+- **`prompts.txt`**: Contains all the prompt templates used for classification, including system prompts, zero-shot, few-shot, chain-of-thought, and optimized prompts.
 
 ---
 
