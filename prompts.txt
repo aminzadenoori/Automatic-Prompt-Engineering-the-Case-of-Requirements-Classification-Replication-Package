@@ -90,19 +90,28 @@ Step 5: Determine the classification of the requirement and provide the final la
 AUTOMATIC PROMPT ENGINEERING
 ========================================
 
--- Initial (Sample) Prompt --
+-- Initial (Sample) Prompt: Functionality vs Non-Functionality --
 
-You are an expert system that needs to classify software requirements into two categories: {category} and {opposite_category}.
+You are an expert system that needs to classify software requirements into two categories: Functionality and Non-Functionality.
 
 Let's analyze the classification of requirements step by step.
 
 Step 1: Review the examples of different types of requirements and their classifications:
 
-{formatted_examples}
+"'When a game is ended the product shall notify the players that the game is ended.'" --> Functional
+"'The system shall display data from the Sync Matrix 1.0 and Exercise Management Tool 1.0 applications'" --> Functional
+"'Program Administrators and Nursing Staff Members shall have the ability to specify which classes are required for a Program of Study'" --> Functional
+"'Classes for a given cohort shall not conflict with regards to the time and day that they are offered.'" --> Functional
+"'Website must be fully operational with MSN TV2.'" --> Non-Functional
+"'The verbiage used within the system shall be consistent with Standard English and the terminology of the national Nursing Community.'" --> Non-Functional
+"'The product shall ensure that the database’s data corresponds to the data entered by the user. Each conference room reservation in the system will contain the same information as was entered by the user.'" --> Non-Functional
+"'All authorized users once authenticated must be able to logon to the Disputes System'" --> Non-Functional
 
 Step 2: Read the explanations for these classifications:
 
-{explanations}
+'Functional': """Functional requirements specify what the system should do. They describe the functionality or services that the system is expected to provide. These requirements define the specific behaviors or functions of the system, such as calculations, technical details, data manipulation, processing, and other specific functionality that shows how the system is to perform certain tasks.""",
+
+'Non-Functional': """Non-functional requirements specify how the system should behave and impose constraints on the system's functionality. They describe the system's qualities or attributes, such as performance, security, usability, reliability, etc. These requirements define criteria that can be used to judge the operation of a system, rather than specific behaviors."""
 
 Step 3: Understand how to classify requirements using the examples and explanations as guidance.
 
@@ -112,6 +121,39 @@ Step 5: Determine the classification of the requirement and provide the final la
 Based on these examples and explanations classify unseen software requirements into {category} or {opposite_category}. Just give the final label without any explanations. The output categories should be exactly the same as the categories mentioned here.
 
 --------------------------------------------------
+
+-- Initial (Sample) Prompt: Quality vs Non-Quality --
+
+You are an expert system that needs to classify software requirements into two categories: Quality and Non-Quality.
+
+Let's analyze the classification of requirements step by step.
+
+Step 1: Review the examples of different types of requirements and their classifications:
+
+"'The realtor shall be able to retrieve a map showing property locations for a specified area'" --> Non-Quality
+"'The system shall offer a display of all the Events in the exercise.'" --> Non-Quality
+"'The product will display an available status for unreserved conference rooms.'" --> Non-Quality
+"'If the shot was marked as a miss the product shall change the status of the defensive player to offensive'" --> Non-Quality
+"'The owner shall have free access to all of the streaming movies.'" --> Quality
+"'Website must interface with the CyberSource API to process credit card transactions.'" --> Quality
+"'The website shall be attractive to all audiences. The website shall appear to be fun and the colors should be bright and vibrant.'" --> Quality
+"'The product shall be robust.The product shall have fault avoidance based on standards adoption.'" --> Quality
+
+Step 2: Read the explanations for these classifications:
+
+     'Quality': """Quality requirements specify attributes like performance, security, usability, reliability, etc. These requirements focus on how well the system performs its functions and impose constraints on the system's operation.""",
+            'Non-Quality': """Non-quality requirements are requirements that do not specify quality attributes. They might include functional requirements or other specifications that do not focus on the quality aspects of the system."""
+       
+
+Step 3: Understand how to classify requirements using the examples and explanations as guidance.
+
+Step 4: Apply this understanding to the following requirement.
+
+Step 5: Determine the classification of the requirement and provide the final label of the class without any explanations.
+Based on these examples and explanations classify unseen software requirements into {category} or {opposite_category}. Just give the final label without any explanations. The output categories should be exactly the same as the categories mentioned here.
+
+--------------------------------------------------
+
 
 -- Optimization Prompt --
 
