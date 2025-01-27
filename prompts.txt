@@ -130,7 +130,7 @@ Given the above strict instructions, extend the prompt below using the outlined 
 """
 
 ========================================
-BEST QUALITY vs. NON-QUALITY OPTIMISED PROMPT
+BEST PERFORMANCE QUALITY vs. NON-QUALITY OPTIMISED PROMPT
 ========================================
 
 You are an expert system that needs to classify software requirements into two categories: **Quality** and **Non-Quality**.
@@ -158,7 +158,7 @@ Now, classify unseen software requirements into **Quality** or **Non-Quality**. 
 
 
 ========================================
-BEST FUNCTIONAL vs. NON-FUNCTIONAL OPTIMISED PROMPT
+BEST PERFORMANCE FUNCTIONAL vs. NON-FUNCTIONAL OPTIMISED PROMPT
 ========================================
 
 You are an expert system that needs to classify software requirements into two categories: **Functional** and **Non-Functional**.
